@@ -13,8 +13,7 @@ import timber.log.Timber
 
 abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState<VS, VE>, IN : Intent, VE : ViewEffect>(
     private val mainThread: Scheduler
-) :
-    ViewModel() {
+) : ViewModel() {
 
     protected abstract val defaultViewState: VS
 
@@ -83,17 +82,19 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
         partialStateDisposable.add(partialStateStream
             .scan(getViewState(), this::reduce)
             .subscribeBy(
-                onNext = { viewStateSubject.onNext(it) },
-                onError = { viewStateSubject.onError(it) },
+                onNext = { viewState -> viewStateSubject.onNext(viewState) },
+                onError = { viewState -> viewStateSubject.onError(viewState) },
                 onComplete = { viewStateSubject.onComplete() }
             ))
         partialStateDisposable.add(partialStateStream
-            .flatMap {
-                it.mapToViewEffect()?.let { Observable.just(it) } ?: Observable.never()
+            .flatMap { partialState ->
+                partialState.mapToViewEffect()
+                    ?.let { viewEffect -> Observable.just(viewEffect) }
+                    ?: Observable.never()
             }
             .subscribeBy(
-                onNext = { viewEffectSubject.onNext(it) },
-                onError = { viewEffectSubject.onError(it) },
+                onNext = { viewEffect -> viewEffectSubject.onNext(viewEffect) },
+                onError = { viewEffect -> viewEffectSubject.onError(viewEffect) },
                 onComplete = { viewEffectSubject.onComplete() }
             ))
     }
