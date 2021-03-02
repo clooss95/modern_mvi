@@ -8,10 +8,12 @@ import com.example.modernmvi.base.viewBinding
 import com.example.modernmvi.databinding.ActivityMainBinding
 import com.example.modernmvi.feature.second.SecondScreenActivity
 import com.jakewharton.rxbinding4.view.clicks
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 
 interface MainView : View<MainViewState, MainViewEffect, MainIntent>
 
+@AndroidEntryPoint
 class MainActivity :
     MviActivity<MainViewState, MainViewEffect, MainView, MainPresenter, ActivityMainBinding>(),
     MainView {

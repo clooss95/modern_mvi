@@ -3,15 +3,17 @@ package com.example.modernmvi.base
 import androidx.annotation.CallSuper
 import androidx.annotation.MainThread
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import timber.log.Timber
 
-abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState<VS, VE>, IN : Intent, VE : ViewEffect> :
+abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState<VS, VE>, IN : Intent, VE : ViewEffect>(
+    private val mainThread: Scheduler
+) :
     ViewModel() {
 
     protected abstract val defaultViewState: VS
@@ -51,7 +53,7 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
     private fun observeViewState() {
         viewStateDisposable.add(
             viewStateSubject.distinctUntilChanged()
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mainThread)
                 .subscribe({ state ->
                     view?.render(state)
                 }, {
@@ -66,7 +68,7 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
     private fun observeViewEffects() {
         viewStateDisposable.add(
             viewEffectSubject.distinctUntilChanged()
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(mainThread)
                 .subscribe({ viewEffect ->
                     view?.handleViewEffect(viewEffect)
                 }, {
@@ -104,7 +106,7 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
     private fun reduce(previousState: VS, partialState: PS): VS = partialState.reduce(previousState)
 
     private fun mapIntents(): Observable<PS> =
-        view!!.emitIntents().flatMap { intentToPartialState(it) } ?: Observable.never()
+        view?.emitIntents()?.flatMap { intentToPartialState(it) } ?: Observable.never()
 
     private fun mapPresenterActions(): Observable<PS> =
         presenterAction().flatMap { intentToPartialState(it) }
