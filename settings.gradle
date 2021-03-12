@@ -1,2 +1,3 @@
 rootProject.name = "ModernMVI"
-include ':app'
+include ':sample'
+include ':modern_mvi_core'
