@@ -19,6 +19,9 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
 
     private var view: V? = null
 
+    private val intentSubject = PublishSubject.create<IN>()
+
+    private val intentDisposable = CompositeDisposable()
     private val partialStateDisposable = CompositeDisposable()
     private val viewStateDisposable = CompositeDisposable()
     private val eventsDisposable = CompositeDisposable()
@@ -36,14 +39,19 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
         this.view = null
     }
 
-    internal fun bind() {
+    init {
         observePartialState(Observable.merge(mapIntents(), mapPresenterActions()).share())
+    }
+
+    internal fun bind() {
         observeViewState()
         observeViewEffects()
+        observeViewIntents()
     }
 
     @CallSuper
     internal fun unbind() {
+        intentDisposable.clear()
         viewStateDisposable.clear()
         eventsDisposable.clear()
     }
@@ -78,6 +86,20 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
         )
     }
 
+    @MainThread
+    private fun observeViewIntents() {
+        intentDisposable.add(
+            (view?.emitIntents() ?: Observable.never())
+                .subscribe({ intent ->
+                    intentSubject.onNext(intent)
+                }, {
+                    Timber.d("handle intent error $it!")
+                }, {
+                    Timber.d("handle intent completed!")
+                })
+        )
+    }
+
     private fun observePartialState(partialStateStream: Observable<PS>) {
         partialStateDisposable.add(partialStateStream
             .scan(getViewState(), this::reduce)
@@ -107,7 +129,7 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
     private fun reduce(previousState: VS, partialState: PS): VS = partialState.reduce(previousState)
 
     private fun mapIntents(): Observable<PS> =
-        view?.emitIntents()?.flatMap { intentToPartialState(it) } ?: Observable.never()
+        intentSubject.flatMap { intentToPartialState(it) }
 
     private fun mapPresenterActions(): Observable<PS> =
         presenterAction().flatMap { intentToPartialState(it) }

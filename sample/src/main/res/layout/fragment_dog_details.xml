@@ -64,7 +64,6 @@
                 android:layout_marginRight="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{model.breed}"
                 android:textSize="20sp" />
         </LinearLayout>
 
