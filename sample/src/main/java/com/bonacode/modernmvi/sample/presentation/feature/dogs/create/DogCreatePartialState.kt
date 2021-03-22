@@ -42,6 +42,10 @@ sealed class DogCreatePartialState : PartialState<DogCreateViewState, DogCreateV
         override fun reduce(previousState: DogCreateViewState): DogCreateViewState {
             return previousState.copy(showProgressBar = true, error = null)
         }
+
+        override fun mapToViewEffect(): DogCreateViewEffect {
+            return DogCreateViewEffect.HideKeyboard
+        }
     }
 
     data class Error(private val value: Throwable) : DogCreatePartialState() {

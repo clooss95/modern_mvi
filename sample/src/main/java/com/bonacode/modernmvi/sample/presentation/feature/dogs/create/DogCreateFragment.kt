@@ -43,8 +43,9 @@ class DogCreateFragment :
     }
 
     override fun handleViewEffect(event: DogCreateViewEffect) {
-        if (event is DogCreateViewEffect.NavigateBack) {
-            findNavController().popBackStack()
+        when (event) {
+            is DogCreateViewEffect.NavigateBack -> findNavController().popBackStack()
+            is DogCreateViewEffect.HideKeyboard -> hideKeyboard()
         }
     }
 }
