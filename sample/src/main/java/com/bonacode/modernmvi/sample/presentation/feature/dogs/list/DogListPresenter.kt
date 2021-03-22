@@ -1,13 +1,15 @@
 package com.bonacode.modernmvi.sample.presentation.feature.dogs.list
 
-import androidx.hilt.lifecycle.ViewModelInject
 import com.bonacode.modernmvi.core.Presenter
 import com.bonacode.modernmvi.sample.presentation.di.SchedulersModule
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
+import javax.inject.Inject
 import javax.inject.Named
 
-class DogListPresenter @ViewModelInject constructor(
+@HiltViewModel
+class DogListPresenter @Inject constructor(
     @Named(SchedulersModule.MAIN_THREAD) mainThread: Scheduler,
     private val interactor: DogListInteractor
 ) : Presenter<DogListViewState, DogListView, DogListPartialState, DogListIntent, DogListViewEffect>(

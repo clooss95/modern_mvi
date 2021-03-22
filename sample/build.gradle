@@ -47,14 +47,14 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.7'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.11'
     implementation 'io.reactivex.rxjava3:rxkotlin:3.0.1'
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
 
-    implementation 'com.google.dagger:hilt-android:2.29.1-alpha'
-    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
-    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
-    kapt 'com.google.dagger:hilt-android-compiler:2.29.1-alpha'
+    implementation 'com.google.dagger:hilt-android:2.33-beta'
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-beta01'
+    kapt 'com.google.dagger:hilt-android-compiler:2.33-beta'
 
     implementation "androidx.lifecycle:lifecycle-common-java8:2.3.0"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
@@ -62,8 +62,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
 
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.3"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.3"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.4"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.4"
 
     implementation "com.squareup.leakcanary:leakcanary-android:2.6"
 

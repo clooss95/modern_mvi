@@ -1,13 +1,15 @@
 package com.bonacode.modernmvi.sample.presentation.feature.dogs.create
 
-import androidx.hilt.lifecycle.ViewModelInject
 import com.bonacode.modernmvi.core.Presenter
 import com.bonacode.modernmvi.sample.presentation.di.SchedulersModule
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
+import javax.inject.Inject
 import javax.inject.Named
 
-class DogCreatePresenter @ViewModelInject constructor(
+@HiltViewModel
+class DogCreatePresenter @Inject constructor(
     @Named(SchedulersModule.MAIN_THREAD) mainThread: Scheduler,
     private val interactor: DogCreateInteractor
 ) :
