@@ -27,4 +27,8 @@ class DogDetailsFragment : MviFragment<DogDetailsViewState, DogDetailsViewEffect
     override fun emitIntents(): Observable<DogDetailsIntent> =
         Observable.never()
 
+    companion object {
+        const val ARG_DOG = "args_dog"
+    }
+
 }

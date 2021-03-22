@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bonacode.modernmvi.databinding.ListItemDogBinding
 import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
 
-class DogListAdapter :
-    ListAdapter<Dog, DogListAdapter.ViewHolder>(
+class DogListAdapter : ListAdapter<Dog, DogListAdapter.ViewHolder>(
         object : DiffUtil.ItemCallback<Dog>() {
             override fun areItemsTheSame(
                 oldItem: Dog,
@@ -25,6 +26,8 @@ class DogListAdapter :
         }
     ) {
 
+    private val itemClickedSubject = PublishSubject.create<Dog>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
             ListItemDogBinding.inflate(
@@ -38,10 +41,15 @@ class DogListAdapter :
         holder.bind(getItem(position))
     }
 
+    fun onItemClicked(): Observable<Dog> = itemClickedSubject
+
     inner class ViewHolder(private val binding: ListItemDogBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(model: Dog?) {
             binding.model = model
+            binding.container.setOnClickListener {
+                model?.let { itemClickedSubject.onNext(it) }
+            }
             binding.executePendingBindings()
         }
     }

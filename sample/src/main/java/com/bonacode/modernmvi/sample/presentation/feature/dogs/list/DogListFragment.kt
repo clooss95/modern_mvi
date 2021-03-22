@@ -8,7 +8,9 @@ import com.bonacode.modernmvi.core.MviFragment
 import com.bonacode.modernmvi.core.View
 import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.FragmentDogListBinding
+import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
 import com.bonacode.modernmvi.sample.presentation.common.setVisibility
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 
@@ -26,7 +28,7 @@ class DogListFragment :
 
     override fun handleViewEffect(event: DogListViewEffect) {
         when (event) {
-            is DogListViewEffect.NavigateToDogDetails -> navigateForward()
+            is DogListViewEffect.NavigateToDogDetails -> navigateToDogDetails(event.dog)
         }
     }
 
@@ -43,9 +45,21 @@ class DogListFragment :
     }
 
     override fun emitIntents(): Observable<DogListIntent> =
-        Observable.just(DogListIntent.RefreshDogList)
+        Observable.merge(
+            listOf(
+                Observable.just(DogListIntent.RefreshDogList),
+                onItemClicked()
+            )
+        )
 
-    private fun navigateForward() {
-        findNavController().navigate(R.id.action_dog_list_fragment_to_dog_details_fragment)
+    private fun onItemClicked() = (binding.dogList.adapter as? DogListAdapter)?.onItemClicked()
+        ?.map { DogListIntent.NavigateToDogDetails(it) } ?: Observable.never()
+
+    private fun navigateToDogDetails(dog: Dog) {
+        findNavController().navigate(
+            R.id.action_dog_list_fragment_to_dog_details_fragment,
+            Bundle().apply {
+                putParcelable(DogDetailsFragment.ARG_DOG, dog)
+            })
     }
 }

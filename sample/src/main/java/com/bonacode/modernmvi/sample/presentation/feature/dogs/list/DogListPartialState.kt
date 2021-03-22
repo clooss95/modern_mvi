@@ -32,9 +32,11 @@ sealed class DogListPartialState : PartialState<DogListViewState, DogListViewEff
         }
     }
 
-    object NavigateToDogDetails : DogListPartialState() {
+    data class NavigateToDogDetails(
+        private val dog: Dog
+    ) : DogListPartialState() {
         override fun mapToViewEffect(): DogListViewEffect {
-            return DogListViewEffect.NavigateToDogDetails
+            return DogListViewEffect.NavigateToDogDetails(dog)
         }
     }
 }

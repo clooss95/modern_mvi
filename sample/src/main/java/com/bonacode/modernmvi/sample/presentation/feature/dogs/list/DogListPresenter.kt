@@ -19,7 +19,7 @@ class DogListPresenter @ViewModelInject constructor(
     override fun intentToPartialState(intent: DogListIntent): Observable<DogListPartialState> =
         when (intent) {
             is DogListIntent.RefreshDogList -> interactor.refreshDogList()
-            is DogListIntent.NavigateToDogDetails -> Observable.just(DogListPartialState.NavigateToDogDetails)
+            is DogListIntent.NavigateToDogDetails -> Observable.just(DogListPartialState.NavigateToDogDetails(intent.dog))
         }
 
 }
