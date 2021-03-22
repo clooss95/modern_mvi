@@ -5,10 +5,10 @@ import android.widget.EditText
 import androidx.annotation.StringRes
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.textfield.TextInputLayout
+import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import java.util.concurrent.TimeUnit
 
 fun View.setVisibility(isVisible: Boolean) {
     visibility = if (isVisible) {
@@ -39,3 +39,8 @@ fun EditText.observeTextChanges(): Observable<String> =
         .skipInitialValue()
         .map { it.toString() }
         .distinctUntilChanged()
+
+infix fun <T> View.clicksTo(intent: T): Observable<T> = clicks().map { intent }
+infix fun <T> SwipeRefreshLayout.refreshesTo(intent: T): Observable<T> = refreshes().map { intent }
+infix fun <T> EditText.textChangesTo(mapper: (String) -> T): Observable<T> =
+    observeTextChanges().map { mapper(it) }

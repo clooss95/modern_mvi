@@ -9,9 +9,9 @@ import com.bonacode.modernmvi.core.View
 import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.FragmentDogListBinding
 import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
-import com.bonacode.modernmvi.sample.presentation.common.refreshes
+import com.bonacode.modernmvi.sample.presentation.common.clicksTo
+import com.bonacode.modernmvi.sample.presentation.common.refreshesTo
 import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsFragment
-import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 
@@ -50,8 +50,8 @@ class DogListFragment :
             listOf(
                 Observable.just(DogListIntent.RefreshDogList),
                 onItemClicked(),
-                binding.swipeRefreshLayout.refreshes().map { DogListIntent.RefreshDogList },
-                binding.createButton.clicks().map { DogListIntent.NavigateToCreate }
+                binding.swipeRefreshLayout refreshesTo DogListIntent.RefreshDogList ,
+                binding.createButton clicksTo DogListIntent.NavigateToCreate
             )
         )
 

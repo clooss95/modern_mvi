@@ -6,6 +6,7 @@ import com.bonacode.modernmvi.core.MviActivity
 import com.bonacode.modernmvi.core.View
 import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.ActivityCounterBinding
+import com.bonacode.modernmvi.sample.presentation.common.clicksTo
 import com.bonacode.modernmvi.sample.presentation.feature.dogs.DogsActivity
 import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,9 +35,9 @@ class CounterActivity :
     }
 
     override fun emitIntents(): Observable<CounterIntent> = Observable.merge(
-        binding.increaseButton.clicks().map { CounterIntent.Increase },
-        binding.decreaseButton.clicks().map { CounterIntent.Decrease },
-        binding.navigateForwardButton.clicks().map { CounterIntent.NavigateToSecondScreen }
+        binding.increaseButton clicksTo CounterIntent.Increase,
+        binding.decreaseButton clicksTo CounterIntent.Decrease ,
+        binding.navigateForwardButton clicksTo CounterIntent.NavigateToSecondScreen
     )
 
     private fun navigateToSecondScreen() {
