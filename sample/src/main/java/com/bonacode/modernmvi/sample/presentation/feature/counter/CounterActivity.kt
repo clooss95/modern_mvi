@@ -14,7 +14,8 @@ import io.reactivex.rxjava3.core.Observable
 interface CounterView : View<CounterViewState, CounterViewEffect, CounterIntent>
 
 @AndroidEntryPoint
-class CounterActivity : MviActivity<CounterViewState, CounterViewEffect, CounterView, CounterPresenter, ActivityCounterBinding>(),
+class CounterActivity :
+    MviActivity<CounterViewState, CounterViewEffect, CounterView, CounterPresenter, ActivityCounterBinding>(),
     CounterView {
 
     override val binding: ActivityCounterBinding by viewBinding(ActivityCounterBinding::inflate)
@@ -22,7 +23,8 @@ class CounterActivity : MviActivity<CounterViewState, CounterViewEffect, Counter
     override fun getMviView(): CounterView = this
 
     override fun render(viewState: CounterViewState) {
-        binding.counter.text = viewState.counterValue.toString()
+        binding.viewState = viewState
+        binding.executePendingBindings()
     }
 
     override fun handleViewEffect(event: CounterViewEffect) {

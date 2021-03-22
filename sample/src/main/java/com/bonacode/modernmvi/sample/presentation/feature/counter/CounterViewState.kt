@@ -4,4 +4,6 @@ import com.bonacode.modernmvi.core.ViewState
 
 data class CounterViewState(
     val counterValue: Int = 0
-) : ViewState
+) : ViewState {
+    val counterValueText: String = "$counterValue"
+}

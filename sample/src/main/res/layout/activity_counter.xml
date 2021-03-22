@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".sample.presentation.feature.counter.CounterActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/counter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="43" />
+    <data>
+        <variable
+            name="viewState"
+            type="com.bonacode.modernmvi.sample.presentation.feature.counter.CounterViewState" />
+    </data>
 
-    <Button
-        android:id="@+id/increaseButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".sample.presentation.feature.counter.CounterActivity">
 
-    <Button
-        android:id="@+id/decreaseButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-" />
+        <TextView
+            android:text="@{viewState.counterValueText}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="43" />
 
-    <Button
-        android:id="@+id/navigateForwardButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Navigate to more complex sample" />
+        <Button
+            android:id="@+id/increaseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/decreaseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-" />
+
+        <Button
+            android:id="@+id/navigateForwardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Navigate to more complex sample" />
+
+    </LinearLayout>
+</layout>
