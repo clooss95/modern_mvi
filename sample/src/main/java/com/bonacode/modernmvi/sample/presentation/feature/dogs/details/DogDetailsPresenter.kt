@@ -8,12 +8,15 @@ import io.reactivex.rxjava3.core.Scheduler
 import javax.inject.Named
 
 class DogDetailsPresenter @ViewModelInject constructor(
-    @Named(SchedulersModule.MAIN_THREAD) mainThread: Scheduler
+    @Named(SchedulersModule.MAIN_THREAD) mainThread: Scheduler,
+    private val interactor: DogDetailsInteractor
 ) : Presenter<DogDetailsViewState, DogDetailsView, DogDetailsPartialState, DogDetailsIntent, DogDetailsViewEffect>(mainThread) {
     override val defaultViewState: DogDetailsViewState
         get() = DogDetailsViewState()
 
     override fun intentToPartialState(intent: DogDetailsIntent): Observable<DogDetailsPartialState> =
-        Observable.never()
+        when(intent){
+            is DogDetailsIntent.LoadDogDetails -> interactor.loadDogDetails(intent.dogId)
+        }
 
 }

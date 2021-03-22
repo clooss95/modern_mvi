@@ -63,7 +63,7 @@ class DogListFragment :
         findNavController().navigate(
             R.id.action_dog_list_fragment_to_dog_details_fragment,
             Bundle().apply {
-                putParcelable(DogDetailsFragment.ARG_DOG, dog)
+                putLong(DogDetailsFragment.ARG_DOG_ID, dog.id)
             })
     }
 }

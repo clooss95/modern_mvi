@@ -5,4 +5,5 @@ import io.reactivex.rxjava3.core.Observable
 
 interface DogsDataSource {
     fun findAll(): Observable<List<Dog>>
+    fun getDogById(id: Long): Observable<Dog>
 }
