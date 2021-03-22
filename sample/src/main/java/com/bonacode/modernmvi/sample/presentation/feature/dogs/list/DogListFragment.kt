@@ -9,6 +9,7 @@ import com.bonacode.modernmvi.core.View
 import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.FragmentDogListBinding
 import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
+import com.bonacode.modernmvi.sample.presentation.common.refreshes
 import com.bonacode.modernmvi.sample.presentation.common.setVisibility
 import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,9 +36,9 @@ class DogListFragment :
     override fun render(viewState: DogListViewState) {
         with(viewState) {
             (binding.dogList.adapter as? DogListAdapter)?.submitList(dogList)
-            binding.progressBar.setVisibility(showProgressBar)
             binding.errorTextView.setVisibility(error != null)
             binding.errorTextView.text = error?.message ?: ""
+            binding.swipeRefreshLayout.isRefreshing = showProgressBar
         }
     }
 
@@ -50,7 +51,8 @@ class DogListFragment :
         Observable.merge(
             listOf(
                 Observable.just(DogListIntent.RefreshDogList),
-                onItemClicked()
+                onItemClicked(),
+                binding.swipeRefreshLayout.refreshes().map { DogListIntent.RefreshDogList }
             )
         )
 
