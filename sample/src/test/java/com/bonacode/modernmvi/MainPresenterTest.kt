@@ -1,14 +1,14 @@
 package com.bonacode.modernmvi
 
-import com.bonacode.modernmvi.sample.feature.main.MainPresenter
-import com.bonacode.modernmvi.sample.feature.main.MainViewEffect
-import com.bonacode.modernmvi.sample.feature.main.MainViewState
+import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterPresenter
+import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterViewEffect
+import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterViewState
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.junit.Test
 
 class MainPresenterTest {
     private val testScheduler = Schedulers.trampoline()
-    private val presenter = MainPresenter(testScheduler)
+    private val presenter = CounterPresenter(testScheduler)
     private val viewRobot = MainPresenterViewRobot(presenter)
 
     @Test
@@ -18,8 +18,8 @@ class MainPresenterTest {
         }
 
         viewRobot.assertViewStates(
-            MainViewState(counterValue = 0),
-            MainViewState(counterValue = 1)
+            CounterViewState(counterValue = 0),
+            CounterViewState(counterValue = 1)
         )
     }
 
@@ -30,8 +30,8 @@ class MainPresenterTest {
         }
 
         viewRobot.assertViewStates(
-            MainViewState(counterValue = 0),
-            MainViewState(counterValue = -1)
+            CounterViewState(counterValue = 0),
+            CounterViewState(counterValue = -1)
         )
     }
 
@@ -42,7 +42,7 @@ class MainPresenterTest {
         }
 
         viewRobot.assertViewEffects(
-            MainViewEffect.NavigateToSecondScreen
+            CounterViewEffect.NavigateToSecondScreen
         )
     }
 

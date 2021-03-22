@@ -2,26 +2,19 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/second_screen_navigation"
-    app:startDestination="@id/firstFragment">
+    app:startDestination="@id/dog_list_fragment">
 
     <fragment
-        android:id="@+id/firstFragment"
-        android:name="com.bonacode.modernmvi.sample.feature.second.fragmentfirst.FirstFragment"
+        android:id="@+id/dog_list_fragment"
+        android:name="com.bonacode.modernmvi.sample.presentation.feature.dogs.list.DogListFragment"
         android:label="FirstFragment" >
         <action
-            android:id="@+id/action_firstFragment_to_secondFragment"
-            app:destination="@id/secondFragment" />
+            android:id="@+id/action_dog_list_fragment_to_dog_details_fragment"
+            app:destination="@id/dog_details_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/secondFragment"
-        android:name="com.bonacode.modernmvi.sample.feature.second.fragmentsecond.SecondFragment"
+        android:id="@+id/dog_details_fragment"
+        android:name="com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsFragment"
         android:label="SecondFragment" >
-        <action
-            android:id="@+id/action_secondFragment_to_thirdFragment"
-            app:destination="@id/thirdFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/thirdFragment"
-        android:name="com.bonacode.modernmvi.sample.feature.second.thirdfragment.ThirdFragment"
-        android:label="ThirdFragment" />
 </navigation>

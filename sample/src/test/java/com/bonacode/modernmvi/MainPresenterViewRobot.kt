@@ -1,29 +1,29 @@
 package com.bonacode.modernmvi
 
 import com.bonacode.modernmvi.core.ViewRobot
-import com.bonacode.modernmvi.sample.feature.main.*
+import com.bonacode.modernmvi.sample.presentation.feature.counter.*
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
 class MainPresenterViewRobot(
-    presenter: MainPresenter
-) : ViewRobot<MainViewState, MainViewEffect, MainView, MainPresenter>(presenter) {
+    presenter: CounterPresenter
+) : ViewRobot<CounterViewState, CounterViewEffect, CounterView, CounterPresenter>(presenter) {
 
-    private val increaseSubject = PublishSubject.create<MainIntent.Increase>()
-    private val decreaseSubject = PublishSubject.create<MainIntent.Decrease>()
+    private val increaseSubject = PublishSubject.create<CounterIntent.Increase>()
+    private val decreaseSubject = PublishSubject.create<CounterIntent.Decrease>()
     private val navigateToSecondScreenSubject =
-        PublishSubject.create<MainIntent.NavigateToSecondScreen>()
+        PublishSubject.create<CounterIntent.NavigateToSecondScreen>()
 
-    override val view: MainView = object : MainView {
-        override fun render(viewState: MainViewState) {
+    override val view: CounterView = object : CounterView {
+        override fun render(viewState: CounterViewState) {
             renderedStates.add(viewState)
         }
 
-        override fun handleViewEffect(event: MainViewEffect) {
+        override fun handleViewEffect(event: CounterViewEffect) {
             emittedViewEffects.add(event)
         }
 
-        override fun emitIntents(): Observable<MainIntent> = Observable.merge(
+        override fun emitIntents(): Observable<CounterIntent> = Observable.merge(
             increaseSubject,
             decreaseSubject,
             navigateToSecondScreenSubject
@@ -31,15 +31,15 @@ class MainPresenterViewRobot(
     }
 
     fun increase() {
-        increaseSubject.onNext(MainIntent.Increase)
+        increaseSubject.onNext(CounterIntent.Increase)
     }
 
     fun decrease() {
-        decreaseSubject.onNext(MainIntent.Decrease)
+        decreaseSubject.onNext(CounterIntent.Decrease)
     }
 
     fun navigateToSecondScreen() {
-        navigateToSecondScreenSubject.onNext(MainIntent.NavigateToSecondScreen)
+        navigateToSecondScreenSubject.onNext(CounterIntent.NavigateToSecondScreen)
     }
 
 }
