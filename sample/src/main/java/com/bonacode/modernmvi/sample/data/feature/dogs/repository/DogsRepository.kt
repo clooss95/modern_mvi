@@ -2,6 +2,7 @@ package com.bonacode.modernmvi.sample.data.feature.dogs.repository
 
 import com.bonacode.modernmvi.sample.domain.feature.dogs.datasource.DogsDataSource
 import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -36,9 +37,26 @@ class DogsRepository @Inject constructor() : DogsDataSource {
         val observable = if (dog != null) {
             Observable.just(dog)
         } else {
-            Observable.error(IOException("Not fount"))
+            Observable.error(IOException("Not found"))
         }
 
         return observable.delay(1500, TimeUnit.MILLISECONDS)
     }
+
+    override fun addDog(name: String, breed: String, imageUrl: String?): Completable {
+        val prevId: Long = dogs.map { it.id }.maxOrNull() ?: 1L
+
+        dogs.add(
+            Dog(
+                id = prevId + 1,
+                name = name,
+                breed = breed,
+                imageUrl = imageUrl?.takeIf { it.isNotBlank() }
+                    ?: "https://static.fajnyzwierzak.pl/media/uploads/media_image/original/wpis/284/labrador-retriever.jpg"
+            )
+        )
+
+        return Completable.complete().delay(1500, TimeUnit.MILLISECONDS)
+    }
+
 }

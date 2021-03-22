@@ -11,10 +11,17 @@
         <action
             android:id="@+id/action_dog_list_fragment_to_dog_details_fragment"
             app:destination="@id/dog_details_fragment" />
+        <action
+            android:id="@+id/action_dog_list_fragment_to_dog_create_fragment"
+            app:destination="@id/dog_create_fragment" />
     </fragment>
     <fragment
         android:id="@+id/dog_details_fragment"
         android:name="com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsFragment"
         android:label="SecondFragment" >
     </fragment>
+    <fragment
+        android:id="@+id/dog_create_fragment"
+        android:name="com.bonacode.modernmvi.sample.presentation.feature.dogs.create.DogCreateFragment"
+        android:label="DogCreateFragment" />
 </navigation>

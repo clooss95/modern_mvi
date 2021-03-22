@@ -12,6 +12,7 @@ import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
 import com.bonacode.modernmvi.sample.presentation.common.refreshes
 import com.bonacode.modernmvi.sample.presentation.common.setVisibility
 import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsFragment
+import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 
@@ -30,6 +31,7 @@ class DogListFragment :
     override fun handleViewEffect(event: DogListViewEffect) {
         when (event) {
             is DogListViewEffect.NavigateToDogDetails -> navigateToDogDetails(event.dog)
+            is DogListViewEffect.NavigateToCreate -> navigateToCreate()
         }
     }
 
@@ -52,7 +54,8 @@ class DogListFragment :
             listOf(
                 Observable.just(DogListIntent.RefreshDogList),
                 onItemClicked(),
-                binding.swipeRefreshLayout.refreshes().map { DogListIntent.RefreshDogList }
+                binding.swipeRefreshLayout.refreshes().map { DogListIntent.RefreshDogList },
+                binding.createButton.clicks().map { DogListIntent.NavigateToCreate }
             )
         )
 
@@ -65,5 +68,9 @@ class DogListFragment :
             Bundle().apply {
                 putLong(DogDetailsFragment.ARG_DOG_ID, dog.id)
             })
+    }
+
+    private fun navigateToCreate(){
+        findNavController().navigate(R.id.action_dog_list_fragment_to_dog_create_fragment)
     }
 }

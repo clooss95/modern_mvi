@@ -20,6 +20,7 @@ class DogListPresenter @ViewModelInject constructor(
         when (intent) {
             is DogListIntent.RefreshDogList -> interactor.refreshDogList()
             is DogListIntent.NavigateToDogDetails -> Observable.just(DogListPartialState.NavigateToDogDetails(intent.dog))
+            is DogListIntent.NavigateToCreate -> Observable.just(DogListPartialState.NavigateToCreate)
         }
 
 }
