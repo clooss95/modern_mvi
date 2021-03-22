@@ -12,5 +12,5 @@ data class DogCreateViewState(
     val error: Throwable? = null
 ) : ViewState {
     val formValid: Boolean =
-        name != null && name.isNotEmpty() && breed != null && breed.isNotEmpty()
+        name != null && name.isNotBlank() && breed != null && breed.isNotBlank()
 }

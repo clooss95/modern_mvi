@@ -8,8 +8,9 @@ sealed class DogCreatePartialState : PartialState<DogCreateViewState, DogCreateV
         override fun reduce(previousState: DogCreateViewState): DogCreateViewState {
             return previousState.copy(
                 name = name,
-                nameError = when{
-                    name.isEmpty() -> R.string.dog_create_name_error
+                nameError = when {
+                    name.isEmpty() -> null
+                    name.isBlank() -> R.string.dog_create_name_error
                     else -> null
                 }
             )
@@ -20,8 +21,9 @@ sealed class DogCreatePartialState : PartialState<DogCreateViewState, DogCreateV
         override fun reduce(previousState: DogCreateViewState): DogCreateViewState {
             return previousState.copy(
                 breed = breed,
-                breedError = when{
-                    breed.isEmpty() -> R.string.dog_create_breed_error
+                breedError = when {
+                    breed.isEmpty() -> null
+                    breed.isBlank() -> R.string.dog_create_breed_error
                     else -> null
                 }
             )

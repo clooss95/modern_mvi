@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">ModernMVI</string>
-    <string name="dog_create_name_error">Name can not be empty</string>
-    <string name="dog_create_breed_error">Breed can not be empty</string>
+    <string name="dog_create_name_error">Name can not be blank</string>
+    <string name="dog_create_breed_error">Breed can not be blank</string>
 </resources>

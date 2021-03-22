@@ -3,11 +3,12 @@ package com.bonacode.modernmvi.sample.presentation.common
 import android.view.View
 import android.widget.EditText
 import androidx.annotation.StringRes
-import androidx.core.widget.addTextChangedListener
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.textfield.TextInputLayout
+import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
 
 fun View.setVisibility(isVisible: Boolean) {
     visibility = if (isVisible) {
@@ -38,3 +39,9 @@ fun EditText.setTextDistinct(text: String?) {
         this.setText(text)
     }
 }
+
+fun EditText.observeTextChanges(): Observable<String> =
+    textChanges()
+        .map { it.toString() }
+        .distinctUntilChanged()
+        .debounce(200, TimeUnit.MILLISECONDS)

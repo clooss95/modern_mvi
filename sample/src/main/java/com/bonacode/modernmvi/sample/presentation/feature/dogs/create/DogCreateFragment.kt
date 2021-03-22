@@ -7,11 +7,11 @@ import com.bonacode.modernmvi.core.MviFragment
 import com.bonacode.modernmvi.core.View
 import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.FragmentDogCreateBinding
+import com.bonacode.modernmvi.sample.presentation.common.observeTextChanges
 import com.bonacode.modernmvi.sample.presentation.common.resError
 import com.bonacode.modernmvi.sample.presentation.common.setTextDistinct
 import com.bonacode.modernmvi.sample.presentation.common.setVisibility
 import com.jakewharton.rxbinding4.view.clicks
-import com.jakewharton.rxbinding4.widget.textChanges
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 
@@ -29,12 +29,12 @@ class DogCreateFragment :
 
     override fun emitIntents(): Observable<DogCreateIntent> = Observable.merge(
         listOf(
-            binding.nameEditText.textChanges()
-                .map { DogCreateIntent.NameChanged(it.toString()) },
-            binding.breedEditText.textChanges()
-                .map { DogCreateIntent.BreedChanged(it.toString()) },
-            binding.imageUrlEditText.textChanges()
-                .map { DogCreateIntent.ImageUrlChanged(it.toString()) },
+            binding.nameEditText.observeTextChanges()
+                .map { DogCreateIntent.NameChanged(it) },
+            binding.breedEditText.observeTextChanges()
+                .map { DogCreateIntent.BreedChanged(it) },
+            binding.imageUrlEditText.observeTextChanges()
+                .map { DogCreateIntent.ImageUrlChanged(it) },
             binding.saveButton.clicks()
                 .map { DogCreateIntent.Save }
         )
