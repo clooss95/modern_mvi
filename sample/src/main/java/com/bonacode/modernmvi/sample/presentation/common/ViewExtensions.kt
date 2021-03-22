@@ -34,14 +34,8 @@ fun TextInputLayout.resError(@StringRes res: Int?) {
     }
 }
 
-fun EditText.setTextDistinct(text: String?) {
-    if (this.text.toString() != text) {
-        this.setText(text)
-    }
-}
-
 fun EditText.observeTextChanges(): Observable<String> =
     textChanges()
+        .skipInitialValue()
         .map { it.toString() }
         .distinctUntilChanged()
-        .debounce(200, TimeUnit.MILLISECONDS)

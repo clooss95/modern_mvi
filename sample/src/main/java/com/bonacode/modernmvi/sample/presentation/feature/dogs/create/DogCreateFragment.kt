@@ -8,9 +8,6 @@ import com.bonacode.modernmvi.core.View
 import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.FragmentDogCreateBinding
 import com.bonacode.modernmvi.sample.presentation.common.observeTextChanges
-import com.bonacode.modernmvi.sample.presentation.common.resError
-import com.bonacode.modernmvi.sample.presentation.common.setTextDistinct
-import com.bonacode.modernmvi.sample.presentation.common.setVisibility
 import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
@@ -41,20 +38,8 @@ class DogCreateFragment :
     )
 
     override fun render(viewState: DogCreateViewState) {
-        with(viewState) {
-            binding.progressBar.setVisibility(showProgressBar)
-            binding.errorTextView.text = error?.message ?: ""
-            binding.errorTextView.setVisibility(error != null)
-
-            binding.nameEditText.setTextDistinct(name)
-            binding.breedEditText.setTextDistinct(breed)
-            binding.imageUrlEditText.setTextDistinct(imageUrl)
-
-            binding.nameTextInputLayout.resError(nameError)
-            binding.breedTextInputLayout.resError(breedError)
-
-            binding.saveButton.isEnabled = formValid
-        }
+        binding.viewState = viewState
+        binding.executePendingBindings()
     }
 
     override fun handleViewEffect(event: DogCreateViewEffect) {

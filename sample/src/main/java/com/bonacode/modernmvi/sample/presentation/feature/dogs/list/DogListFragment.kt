@@ -10,7 +10,6 @@ import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.FragmentDogListBinding
 import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
 import com.bonacode.modernmvi.sample.presentation.common.refreshes
-import com.bonacode.modernmvi.sample.presentation.common.setVisibility
 import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsFragment
 import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,12 +35,9 @@ class DogListFragment :
     }
 
     override fun render(viewState: DogListViewState) {
-        with(viewState) {
-            (binding.dogList.adapter as? DogListAdapter)?.submitList(dogList)
-            binding.errorTextView.setVisibility(error != null)
-            binding.errorTextView.text = error?.message ?: ""
-            binding.swipeRefreshLayout.isRefreshing = showProgressBar
-        }
+        (binding.dogList.adapter as? DogListAdapter)?.submitList(viewState.dogList)
+        binding.viewState = viewState
+        binding.executePendingBindings()
     }
 
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
@@ -70,7 +66,7 @@ class DogListFragment :
             })
     }
 
-    private fun navigateToCreate(){
+    private fun navigateToCreate() {
         findNavController().navigate(R.id.action_dog_list_fragment_to_dog_create_fragment)
     }
 }

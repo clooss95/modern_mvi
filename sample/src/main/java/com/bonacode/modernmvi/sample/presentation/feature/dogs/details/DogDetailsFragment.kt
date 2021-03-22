@@ -7,8 +7,6 @@ import com.bonacode.modernmvi.core.MviFragment
 import com.bonacode.modernmvi.core.View
 import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.FragmentDogDetailsBinding
-import com.bonacode.modernmvi.sample.presentation.common.setVisibility
-import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -29,22 +27,8 @@ class DogDetailsFragment :
     override fun getMviView(): DogDetailsView = this
 
     override fun render(viewState: DogDetailsViewState) {
-        with(viewState) {
-            binding.name.text = dog?.name ?: ""
-            binding.breed.text = dog?.breed ?: ""
-            dog?.imageUrl?.let { imageUrl ->
-                Glide.with(binding.image)
-                    .load(imageUrl)
-                    .centerCrop()
-                    .into(binding.image)
-            }
-            binding.container.setVisibility(dog != null)
-
-            binding.progressBar.setVisibility(showProgressBar)
-
-            binding.errorTextView.text = error?.message ?: ""
-            binding.errorTextView.setVisibility(error != null)
-        }
+        binding.viewState = viewState
+        binding.executePendingBindings()
     }
 
     override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
