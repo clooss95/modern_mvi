@@ -34,6 +34,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 }
 
@@ -67,6 +68,10 @@ dependencies {
     implementation "com.squareup.leakcanary:leakcanary-android:2.6"
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     implementation project(path: ':modern_mvi_core')
 
