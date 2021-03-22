@@ -102,6 +102,7 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
 
     private fun observePartialState(partialStateStream: Observable<PS>) {
         partialStateDisposable.add(partialStateStream
+            .observeOn(mainThread)
             .scan(getViewState(), this::reduce)
             .subscribeBy(
                 onNext = { viewState -> viewStateSubject.onNext(viewState) },
@@ -109,6 +110,7 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
                 onComplete = { viewStateSubject.onComplete() }
             ))
         partialStateDisposable.add(partialStateStream
+            .observeOn(mainThread)
             .flatMap { partialState ->
                 partialState.mapToViewEffect()
                     ?.let { viewEffect -> Observable.just(viewEffect) }

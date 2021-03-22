@@ -52,7 +52,7 @@ class DogsRepository @Inject constructor() : DogsDataSource {
                 name = name,
                 breed = breed,
                 imageUrl = imageUrl?.takeIf { it.isNotBlank() }
-                    ?: "https://static.fajnyzwierzak.pl/media/uploads/media_image/original/wpis/284/labrador-retriever.jpg"
+                    ?: DogsImages.value.random()
             )
         )
 
