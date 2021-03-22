@@ -40,11 +40,7 @@ class DogDetailsFragment :
     }
 
     override fun emitIntents(): Observable<DogDetailsIntent> =
-        Observable.merge(
-            listOf(
-                dogIdSubject.map<DogDetailsIntent> { DogDetailsIntent.LoadDogDetails(it) }
-            )
-        )
+        dogIdSubject.map { DogDetailsIntent.LoadDogDetails(it) }
 
     companion object {
         const val ARG_DOG_ID = "args_dog_id"

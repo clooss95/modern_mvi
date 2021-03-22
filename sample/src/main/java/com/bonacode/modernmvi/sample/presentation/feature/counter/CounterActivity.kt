@@ -35,9 +35,11 @@ class CounterActivity :
     }
 
     override fun emitIntents(): Observable<CounterIntent> = Observable.merge(
-        binding.increaseButton clicksTo CounterIntent.Increase,
-        binding.decreaseButton clicksTo CounterIntent.Decrease ,
-        binding.navigateForwardButton clicksTo CounterIntent.NavigateToSecondScreen
+        listOf(
+            binding.increaseButton clicksTo CounterIntent.Increase,
+            binding.decreaseButton clicksTo CounterIntent.Decrease ,
+            binding.navigateForwardButton clicksTo CounterIntent.NavigateToSecondScreen
+        )
     )
 
     private fun navigateToSecondScreen() {
