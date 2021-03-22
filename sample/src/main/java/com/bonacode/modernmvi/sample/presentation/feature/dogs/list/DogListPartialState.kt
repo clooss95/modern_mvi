@@ -6,18 +6,7 @@ import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
 sealed class DogListPartialState : PartialState<DogListViewState, DogListViewEffect> {
     object DogListLoading : DogListPartialState() {
         override fun reduce(previousState: DogListViewState): DogListViewState {
-            return previousState.copy(showProgressBar = true)
-        }
-    }
-
-    data class Error(
-        val value: Throwable
-    ) : DogListPartialState() {
-        override fun reduce(previousState: DogListViewState): DogListViewState {
-            return previousState.copy(
-                error = value,
-                showProgressBar = false
-            )
+            return previousState.copy(showProgressBar = true, error = null)
         }
     }
 
@@ -27,6 +16,17 @@ sealed class DogListPartialState : PartialState<DogListViewState, DogListViewEff
         override fun reduce(previousState: DogListViewState): DogListViewState {
             return previousState.copy(
                 dogList = dogList,
+                showProgressBar = false
+            )
+        }
+    }
+
+    data class Error(
+        val value: Throwable
+    ) : DogListPartialState() {
+        override fun reduce(previousState: DogListViewState): DogListViewState {
+            return previousState.copy(
+                error = value,
                 showProgressBar = false
             )
         }

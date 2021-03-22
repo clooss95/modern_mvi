@@ -36,6 +36,8 @@ class DogListFragment :
         with(viewState) {
             (binding.dogList.adapter as? DogListAdapter)?.submitList(dogList)
             binding.progressBar.setVisibility(showProgressBar)
+            binding.errorTextView.setVisibility(error != null)
+            binding.errorTextView.text = error?.message ?: ""
         }
     }
 
