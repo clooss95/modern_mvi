@@ -2,8 +2,7 @@ package com.bonacode.modernmvi.feature.dogs.list
 
 import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
 import com.bonacode.modernmvi.sample.presentation.feature.dogs.list.*
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.junit.Test
@@ -41,6 +40,14 @@ class DogListPresenterTest {
     }
 
     @Test
+    fun `when navigate to create then no interactor methods called`() {
+        viewRobot.test {
+            viewRobot.navigateToCreate()
+        }
+        verifyZeroInteractions(interactor)
+    }
+
+    @Test
     fun `when navigate to details then proper view effect emitted`() {
         viewRobot.test {
             viewRobot.navigateToDogDetails(dog)
@@ -54,6 +61,14 @@ class DogListPresenterTest {
             viewRobot.navigateToDogDetails(dog)
         }
         viewRobot.assertViewStates(DogListViewState())
+    }
+
+    @Test
+    fun `when navigate to details then no interactor methods called`() {
+        viewRobot.test {
+            viewRobot.navigateToDogDetails(dog)
+        }
+        verifyZeroInteractions(interactor)
     }
 
     @Test
@@ -71,6 +86,25 @@ class DogListPresenterTest {
             viewRobot.refreshDogList()
         }
         viewRobot.assertViewEffects()
+    }
+
+    @Test
+    fun `when refresh dog list then proper interactor methods called`(){
+        whenever(interactor.refreshDogList()).doReturn(
+            Observable.fromIterable(
+                listOf(
+                    DogListPartialState.DogListLoading,
+                    DogListPartialState.DogListUpdated(dogList)
+                )
+            )
+        )
+
+        viewRobot.test {
+            viewRobot.refreshDogList()
+        }
+
+        verify(interactor).refreshDogList()
+        verifyNoMoreInteractions(interactor)
     }
 
     @Test
