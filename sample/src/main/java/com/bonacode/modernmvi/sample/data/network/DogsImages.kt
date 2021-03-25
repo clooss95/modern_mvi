@@ -1,4 +1,4 @@
-package com.bonacode.modernmvi.sample.data.feature.dogs.repository
+package com.bonacode.modernmvi.sample.data.network
 
 object DogsImages {
     val value = listOf(
