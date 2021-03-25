@@ -12,11 +12,10 @@ class CounterPresenterTest {
     private val viewRobot = CounterViewRobot(presenter)
 
     @Test
-    fun `when increase button clicked then counter value increased`() {
+    fun `when increase button clicked then proper view states emitted`() {
         viewRobot.test {
             viewRobot.increase()
         }
-
         viewRobot.assertViewStates(
             CounterViewState(counterValue = 0),
             CounterViewState(counterValue = 1)
@@ -24,11 +23,18 @@ class CounterPresenterTest {
     }
 
     @Test
-    fun `when decrease button clicked then counter value decreased`() {
+    fun `when increase button clicked then no view effects emitted`() {
+        viewRobot.test {
+            viewRobot.increase()
+        }
+        viewRobot.assertViewEffects()
+    }
+
+    @Test
+    fun `when decrease button clicked then proper view states emitted`() {
         viewRobot.test {
             viewRobot.decrease()
         }
-
         viewRobot.assertViewStates(
             CounterViewState(counterValue = 0),
             CounterViewState(counterValue = -1)
@@ -36,14 +42,29 @@ class CounterPresenterTest {
     }
 
     @Test
-    fun `when navigate to second screen button clicked then navigation event emitted`() {
+    fun `when decrease button clicked then no view effects emitted`() {
+        viewRobot.test {
+            viewRobot.decrease()
+        }
+        viewRobot.assertViewEffects()
+    }
+
+    @Test
+    fun `when navigate to second screen button clicked then proper view effects emitted`() {
         viewRobot.test {
             viewRobot.navigateToSecondScreen()
         }
-
         viewRobot.assertViewEffects(
             CounterViewEffect.NavigateToSecondScreen
         )
+    }
+
+    @Test
+    fun `when navigate to second screen button clicked then only default view state emitted`() {
+        viewRobot.test {
+            viewRobot.navigateToSecondScreen()
+        }
+        viewRobot.assertViewStates(CounterViewState())
     }
 
 }
