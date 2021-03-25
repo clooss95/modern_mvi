@@ -61,7 +61,7 @@ class DogListInteractorTest {
     }
 
     @Test
-    fun `when ding all dogs then proper usecase methods called`() {
+    fun `when find all dogs then proper usecase methods called`() {
         whenever(findAllDogs.buildObservable(Unit)).doReturn(Observable.just(dogList))
 
         interactor.refreshDogList().test()
