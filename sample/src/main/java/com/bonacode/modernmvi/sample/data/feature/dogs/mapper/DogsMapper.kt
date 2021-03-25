@@ -5,7 +5,7 @@ import com.bonacode.modernmvi.sample.data.feature.dogs.dto.DogDto
 import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
 import javax.inject.Inject
 
-class DogMapper @Inject constructor(): BaseMapper<DogDto, Dog> {
+class DogsMapper @Inject constructor(): BaseMapper<DogDto, Dog> {
     override fun transform(input: DogDto): Dog = with(input) {
         Dog(
             id = id,

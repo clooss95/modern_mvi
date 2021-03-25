@@ -1,6 +1,6 @@
 package com.bonacode.modernmvi.sample.presentation.di
 
-import com.bonacode.modernmvi.sample.data.network.DogApiService
+import com.bonacode.modernmvi.sample.data.network.DogsApiService
 import com.bonacode.modernmvi.sample.data.network.MockedDogApiService
 import dagger.Binds
 import dagger.Module
@@ -13,5 +13,5 @@ import javax.inject.Singleton
 interface NetworkModule {
     @Singleton
     @Binds
-    fun bindsDogApiService(impl: MockedDogApiService): DogApiService
+    fun bindsDogApiService(impl: MockedDogApiService): DogsApiService
 }

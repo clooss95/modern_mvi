@@ -7,7 +7,7 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-interface DogApiService {
+interface DogsApiService {
     fun findAll(): Observable<List<DogDto>>
 
     fun getDogById(id: Long): Observable<DogDto>
@@ -15,7 +15,7 @@ interface DogApiService {
     fun addDog(name: String, breed: String, imageUrl: String?): Completable
 }
 
-class MockedDogApiService @Inject constructor() : DogApiService{
+class MockedDogApiService @Inject constructor() : DogsApiService{
     private val dogs = mutableListOf(
         DogDto(
             id = 1L,

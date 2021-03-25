@@ -1,7 +1,7 @@
 package com.bonacode.modernmvi.sample.data.feature.dogs.repository
 
-import com.bonacode.modernmvi.sample.data.feature.dogs.mapper.DogMapper
-import com.bonacode.modernmvi.sample.data.network.DogApiService
+import com.bonacode.modernmvi.sample.data.feature.dogs.mapper.DogsMapper
+import com.bonacode.modernmvi.sample.data.network.DogsApiService
 import com.bonacode.modernmvi.sample.domain.feature.dogs.datasource.DogsDataSource
 import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
 import io.reactivex.rxjava3.core.Completable
@@ -11,8 +11,8 @@ import javax.inject.Singleton
 
 @Singleton
 class DogsRepository @Inject constructor(
-    private val apiService: DogApiService,
-    private val mapper: DogMapper
+    private val apiService: DogsApiService,
+    private val mapper: DogsMapper
 ) : DogsDataSource {
 
     override fun findAll(): Observable<List<Dog>> =
