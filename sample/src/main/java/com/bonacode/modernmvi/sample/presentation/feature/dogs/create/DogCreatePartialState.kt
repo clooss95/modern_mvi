@@ -50,7 +50,7 @@ sealed class DogCreatePartialState : PartialState<DogCreateViewState, DogCreateV
 
     data class Error(private val value: Throwable) : DogCreatePartialState() {
         override fun reduce(previousState: DogCreateViewState): DogCreateViewState {
-            return previousState.copy(error = value)
+            return previousState.copy(error = value, showProgressBar = false)
         }
     }
 
