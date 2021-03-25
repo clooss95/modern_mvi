@@ -1,4 +1,4 @@
-package com.bonacode.modernmvi.feature.dogs.list
+package com.bonacode.modernmvi.presentation.feature.dogs.list
 
 import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
 import com.bonacode.modernmvi.sample.domain.feature.dogs.usecase.FindAllDogs

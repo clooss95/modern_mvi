@@ -1,4 +1,4 @@
-package com.bonacode.modernmvi.feature.counter
+package com.bonacode.modernmvi.presentation.feature.counter
 
 import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterPresenter
 import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterViewEffect

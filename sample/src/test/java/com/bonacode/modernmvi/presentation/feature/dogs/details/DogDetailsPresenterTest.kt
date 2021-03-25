@@ -1,4 +1,4 @@
-package com.bonacode.modernmvi.feature.dogs.details
+package com.bonacode.modernmvi.presentation.feature.dogs.details
 
 import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
 import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsInteractor
