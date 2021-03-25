@@ -1,4 +1,4 @@
-package com.bonacode.modernmvi
+package com.bonacode.modernmvi.feature.counter
 
 import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterPresenter
 import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterViewEffect
@@ -6,10 +6,10 @@ import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterViewSta
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.junit.Test
 
-class MainPresenterTest {
+class CounterPresenterTest {
     private val testScheduler = Schedulers.trampoline()
     private val presenter = CounterPresenter(testScheduler)
-    private val viewRobot = MainPresenterViewRobot(presenter)
+    private val viewRobot = CounterViewRobot(presenter)
 
     @Test
     fun `when increase button clicked then counter value increased`() {

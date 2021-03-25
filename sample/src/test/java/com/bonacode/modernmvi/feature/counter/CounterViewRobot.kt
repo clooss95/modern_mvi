@@ -1,11 +1,11 @@
-package com.bonacode.modernmvi
+package com.bonacode.modernmvi.feature.counter
 
 import com.bonacode.modernmvi.core.ViewRobot
 import com.bonacode.modernmvi.sample.presentation.feature.counter.*
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
-class MainPresenterViewRobot(
+class CounterViewRobot(
     presenter: CounterPresenter
 ) : ViewRobot<CounterViewState, CounterViewEffect, CounterView, CounterPresenter>(presenter) {
 
