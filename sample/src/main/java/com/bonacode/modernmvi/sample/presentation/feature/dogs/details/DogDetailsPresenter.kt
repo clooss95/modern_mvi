@@ -17,8 +17,7 @@ class DogDetailsPresenter @Inject constructor(
         get() = DogDetailsViewState()
 
     override fun intentToPartialState(intent: DogDetailsIntent): Observable<DogDetailsPartialState> =
-        when(intent){
+        when (intent) {
             is DogDetailsIntent.LoadDogDetails -> interactor.loadDogDetails(intent.dogId)
         }
-
 }

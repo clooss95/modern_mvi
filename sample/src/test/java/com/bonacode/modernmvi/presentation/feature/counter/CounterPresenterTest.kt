@@ -66,5 +66,4 @@ class CounterPresenterTest {
         }
         viewRobot.assertViewStates(CounterViewState())
     }
-
 }

@@ -1,4 +1,4 @@
-package com.bonacode.modernmvi.core
+package com.bonacode.modernmvi.sample.presentation.common
 
 open class SingleEvent<out T> constructor(
     private val content: T

@@ -9,7 +9,7 @@ class DogDetailsInteractor @Inject constructor(
 ) {
     fun loadDogDetails(id: Long): Observable<DogDetailsPartialState> =
         getDogDetails.buildObservable(GetDogDetails.Params(id))
-            .map <DogDetailsPartialState>{ DogDetailsPartialState.DataLoaded(it) }
+            .map <DogDetailsPartialState> { DogDetailsPartialState.DataLoaded(it) }
             .onErrorResumeNext { Observable.just<DogDetailsPartialState>(DogDetailsPartialState.Error(it)) }
             .startWith(Observable.just<DogDetailsPartialState>(DogDetailsPartialState.Loading))
 }

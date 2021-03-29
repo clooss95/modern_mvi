@@ -7,4 +7,3 @@ sealed class CounterIntent : Intent {
     object Decrease : CounterIntent()
     object NavigateToSecondScreen : CounterIntent()
 }
-

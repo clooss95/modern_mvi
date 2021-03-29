@@ -1,7 +1,11 @@
 package com.bonacode.modernmvi.presentation.feature.counter
 
 import com.bonacode.modernmvi.core.ViewRobot
-import com.bonacode.modernmvi.sample.presentation.feature.counter.*
+import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterIntent
+import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterPresenter
+import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterView
+import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterViewEffect
+import com.bonacode.modernmvi.sample.presentation.feature.counter.CounterViewState
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
@@ -41,5 +45,4 @@ class CounterViewRobot(
     fun navigateToSecondScreen() {
         navigateToSecondScreenSubject.onNext(CounterIntent.NavigateToSecondScreen)
     }
-
 }

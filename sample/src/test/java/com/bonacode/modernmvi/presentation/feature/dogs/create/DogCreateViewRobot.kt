@@ -1,7 +1,11 @@
 package com.bonacode.modernmvi.presentation.feature.dogs.create
 
 import com.bonacode.modernmvi.core.ViewRobot
-import com.bonacode.modernmvi.sample.presentation.feature.dogs.create.*
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.create.DogCreateIntent
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.create.DogCreatePresenter
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.create.DogCreateView
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.create.DogCreateViewEffect
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.create.DogCreateViewState
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
@@ -33,7 +37,6 @@ class DogCreateViewRobot(
                 )
             )
         }
-
 
     fun nameChanged(name: String) {
         nameChangedSubject.onNext(DogCreateIntent.NameChanged(name))

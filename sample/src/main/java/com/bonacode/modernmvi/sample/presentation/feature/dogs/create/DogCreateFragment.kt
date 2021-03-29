@@ -5,10 +5,11 @@ import androidx.navigation.fragment.findNavController
 import com.bonacode.modernmvi.R
 import com.bonacode.modernmvi.core.MviFragment
 import com.bonacode.modernmvi.core.View
-import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.FragmentDogCreateBinding
+import com.bonacode.modernmvi.presentation.common.hideKeyboard
 import com.bonacode.modernmvi.sample.presentation.common.clicksTo
 import com.bonacode.modernmvi.sample.presentation.common.textChangesTo
+import com.bonacode.modernmvi.sample.presentation.common.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 
@@ -18,7 +19,8 @@ interface DogCreateView : View<DogCreateViewState, DogCreateViewEffect, DogCreat
 class DogCreateFragment :
     MviFragment<DogCreateViewState, DogCreateViewEffect, DogCreateView, DogCreatePresenter, FragmentDogCreateBinding>(
         R.layout.fragment_dog_create
-    ), DogCreateView {
+    ),
+    DogCreateView {
     override val binding: FragmentDogCreateBinding by viewBinding(FragmentDogCreateBinding::bind)
     override val presenter: DogCreatePresenter by viewModels()
 

@@ -10,7 +10,7 @@ import javax.inject.Named
 
 @HiltViewModel
 class CounterPresenter @Inject constructor(
-   @Named(MAIN_THREAD) mainThread: Scheduler
+    @Named(MAIN_THREAD) mainThread: Scheduler
 ) : Presenter<CounterViewState, CounterView, CounterPartialState, CounterIntent, CounterViewEffect>(mainThread) {
     override val defaultViewState: CounterViewState
         get() = CounterViewState()

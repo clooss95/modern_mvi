@@ -6,11 +6,11 @@ import androidx.navigation.fragment.findNavController
 import com.bonacode.modernmvi.R
 import com.bonacode.modernmvi.core.MviFragment
 import com.bonacode.modernmvi.core.View
-import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.FragmentDogListBinding
 import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
 import com.bonacode.modernmvi.sample.presentation.common.clicksTo
 import com.bonacode.modernmvi.sample.presentation.common.refreshesTo
+import com.bonacode.modernmvi.sample.presentation.common.viewBinding
 import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
@@ -21,7 +21,8 @@ interface DogListView : View<DogListViewState, DogListViewEffect, DogListIntent>
 class DogListFragment :
     MviFragment<DogListViewState, DogListViewEffect, DogListView, DogListPresenter, FragmentDogListBinding>(
         R.layout.fragment_dog_list
-    ), DogListView {
+    ),
+    DogListView {
 
     override val binding: FragmentDogListBinding by viewBinding(FragmentDogListBinding::bind)
     override val presenter: DogListPresenter by viewModels()
@@ -50,7 +51,7 @@ class DogListFragment :
             listOf(
                 Observable.just(DogListIntent.RefreshDogList),
                 onItemClicked(),
-                binding.swipeRefreshLayout refreshesTo DogListIntent.RefreshDogList ,
+                binding.swipeRefreshLayout refreshesTo DogListIntent.RefreshDogList,
                 binding.createButton clicksTo DogListIntent.NavigateToCreate
             )
         )
@@ -63,7 +64,8 @@ class DogListFragment :
             R.id.action_dog_list_fragment_to_dog_details_fragment,
             Bundle().apply {
                 putLong(DogDetailsFragment.ARG_DOG_ID, dog.id)
-            })
+            }
+        )
     }
 
     private fun navigateToCreate() {

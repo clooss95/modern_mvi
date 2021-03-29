@@ -40,7 +40,7 @@ sealed class DogListPartialState : PartialState<DogListViewState, DogListViewEff
         }
     }
 
-    object NavigateToCreate: DogListPartialState(){
+    object NavigateToCreate : DogListPartialState() {
         override fun mapToViewEffect(): DogListViewEffect {
             return DogListViewEffect.NavigateToCreate
         }

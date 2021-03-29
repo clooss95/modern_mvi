@@ -15,7 +15,7 @@ interface DogsApiService {
     fun addDog(name: String, breed: String, imageUrl: String?): Completable
 }
 
-class MockedDogApiService @Inject constructor() : DogsApiService{
+class MockedDogApiService @Inject constructor() : DogsApiService {
     private val dogs = mutableListOf(
         DogDto(
             id = 1L,
@@ -47,7 +47,7 @@ class MockedDogApiService @Inject constructor() : DogsApiService{
         return observable.delay(1500, TimeUnit.MILLISECONDS)
     }
 
-   override fun addDog(name: String, breed: String, imageUrl: String?): Completable {
+    override fun addDog(name: String, breed: String, imageUrl: String?): Completable {
         val prevId: Long = dogs.map { it.id }.maxOrNull() ?: 1L
 
         dogs.add(

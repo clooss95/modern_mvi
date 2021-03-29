@@ -1,8 +1,16 @@
 package com.bonacode.modernmvi.presentation.feature.dogs.create
 
 import com.bonacode.modernmvi.R
-import com.bonacode.modernmvi.sample.presentation.feature.dogs.create.*
-import com.nhaarman.mockitokotlin2.*
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.create.DogCreateInteractor
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.create.DogCreatePartialState
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.create.DogCreatePresenter
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.create.DogCreateViewEffect
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.create.DogCreateViewState
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.verifyZeroInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.junit.Test
@@ -160,7 +168,6 @@ class DogCreatePresenterTest {
             )
         )
     }
-
 
     @Test
     fun `when create dog and create dog failed then proper view states emitted`() {

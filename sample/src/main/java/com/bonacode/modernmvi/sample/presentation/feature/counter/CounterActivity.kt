@@ -8,7 +8,6 @@ import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.ActivityCounterBinding
 import com.bonacode.modernmvi.sample.presentation.common.clicksTo
 import com.bonacode.modernmvi.sample.presentation.feature.dogs.DogsActivity
-import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 
@@ -37,7 +36,7 @@ class CounterActivity :
     override fun emitIntents(): Observable<CounterIntent> = Observable.merge(
         listOf(
             binding.increaseButton clicksTo CounterIntent.Increase,
-            binding.decreaseButton clicksTo CounterIntent.Decrease ,
+            binding.decreaseButton clicksTo CounterIntent.Decrease,
             binding.navigateForwardButton clicksTo CounterIntent.NavigateToSecondScreen
         )
     )

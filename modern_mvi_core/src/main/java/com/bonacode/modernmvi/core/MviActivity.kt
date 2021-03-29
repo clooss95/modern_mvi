@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
-abstract class MviActivity<VS : ViewState, VE: ViewEffect, V : View<VS, VE, *>, P : Presenter<VS, V, *, *, VE>, VB: ViewBinding> : AppCompatActivity() {
+abstract class MviActivity<VS : ViewState, VE : ViewEffect, V : View<VS, VE, *>, P : Presenter<VS, V, *, *, VE>, VB : ViewBinding> : AppCompatActivity() {
 
     abstract val binding: VB
 
@@ -32,5 +32,4 @@ abstract class MviActivity<VS : ViewState, VE: ViewEffect, V : View<VS, VE, *>, 
     }
 
     protected abstract fun getMviView(): V
-
 }

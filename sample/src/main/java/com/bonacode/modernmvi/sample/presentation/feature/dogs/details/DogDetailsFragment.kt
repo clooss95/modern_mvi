@@ -5,8 +5,8 @@ import androidx.fragment.app.viewModels
 import com.bonacode.modernmvi.R
 import com.bonacode.modernmvi.core.MviFragment
 import com.bonacode.modernmvi.core.View
-import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.FragmentDogDetailsBinding
+import com.bonacode.modernmvi.sample.presentation.common.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -18,7 +18,8 @@ interface DogDetailsView : View<DogDetailsViewState, DogDetailsViewEffect, DogDe
 class DogDetailsFragment :
     MviFragment<DogDetailsViewState, DogDetailsViewEffect, DogDetailsView, DogDetailsPresenter, FragmentDogDetailsBinding>(
         R.layout.fragment_dog_details
-    ), DogDetailsView {
+    ),
+    DogDetailsView {
 
     private val dogIdSubject = BehaviorSubject.create<Long>()
 
@@ -45,5 +46,4 @@ class DogDetailsFragment :
     companion object {
         const val ARG_DOG_ID = "args_dog_id"
     }
-
 }

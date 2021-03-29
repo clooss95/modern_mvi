@@ -1,7 +1,11 @@
 package com.bonacode.modernmvi.presentation.feature.dogs.details
 
 import com.bonacode.modernmvi.core.ViewRobot
-import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.*
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsIntent
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsPresenter
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsView
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsViewEffect
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsViewState
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 

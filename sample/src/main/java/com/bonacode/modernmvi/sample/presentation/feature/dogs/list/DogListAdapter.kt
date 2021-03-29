@@ -11,20 +11,20 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
 class DogListAdapter : ListAdapter<Dog, DogListAdapter.ViewHolder>(
-        object : DiffUtil.ItemCallback<Dog>() {
-            override fun areItemsTheSame(
-                oldItem: Dog,
-                newItem: Dog
-            ): Boolean =
-                oldItem.id == newItem.id
+    object : DiffUtil.ItemCallback<Dog>() {
+        override fun areItemsTheSame(
+            oldItem: Dog,
+            newItem: Dog
+        ): Boolean =
+            oldItem.id == newItem.id
 
-            override fun areContentsTheSame(
-                oldItem: Dog,
-                newItem: Dog
-            ): Boolean =
-                oldItem == newItem
-        }
-    ) {
+        override fun areContentsTheSame(
+            oldItem: Dog,
+            newItem: Dog
+        ): Boolean =
+            oldItem == newItem
+    }
+) {
 
     private val itemClickedSubject = PublishSubject.create<Dog>()
 

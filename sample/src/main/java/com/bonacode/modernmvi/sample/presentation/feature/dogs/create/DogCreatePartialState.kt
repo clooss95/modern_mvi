@@ -63,5 +63,4 @@ sealed class DogCreatePartialState : PartialState<DogCreateViewState, DogCreateV
             return DogCreateViewEffect.NavigateBack
         }
     }
-
 }

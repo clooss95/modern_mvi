@@ -25,5 +25,4 @@ class DogsRepository @Inject constructor(
 
     override fun addDog(name: String, breed: String, imageUrl: String?): Completable =
         apiService.addDog(name, breed, imageUrl)
-
 }

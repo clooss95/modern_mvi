@@ -61,13 +61,17 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
         viewStateDisposable.add(
             viewStateSubject.distinctUntilChanged()
                 .observeOn(mainThread)
-                .subscribe({ state ->
-                    view?.render(state)
-                }, {
-                    Timber.d("render view state error $it!")
-                }, {
-                    Timber.d("render view state completed!")
-                })
+                .subscribe(
+                    { state ->
+                        view?.render(state)
+                    },
+                    {
+                        Timber.d("render view state error $it!")
+                    },
+                    {
+                        Timber.d("render view state completed!")
+                    }
+                )
         )
     }
 
@@ -76,13 +80,17 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
         viewStateDisposable.add(
             viewEffectSubject.distinctUntilChanged()
                 .observeOn(mainThread)
-                .subscribe({ viewEffect ->
-                    view?.handleViewEffect(viewEffect)
-                }, {
-                    Timber.d("handle view effect error $it!")
-                }, {
-                    Timber.d("handle view effect completed!")
-                })
+                .subscribe(
+                    { viewEffect ->
+                        view?.handleViewEffect(viewEffect)
+                    },
+                    {
+                        Timber.d("handle view effect error $it!")
+                    },
+                    {
+                        Timber.d("handle view effect completed!")
+                    }
+                )
         )
     }
 
@@ -90,37 +98,45 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
     private fun observeViewIntents() {
         intentDisposable.add(
             (view?.emitIntents() ?: Observable.never())
-                .subscribe({ intent ->
-                    intentSubject.onNext(intent)
-                }, {
-                    Timber.d("handle intent error $it!")
-                }, {
-                    Timber.d("handle intent completed!")
-                })
+                .subscribe(
+                    { intent ->
+                        intentSubject.onNext(intent)
+                    },
+                    {
+                        Timber.d("handle intent error $it!")
+                    },
+                    {
+                        Timber.d("handle intent completed!")
+                    }
+                )
         )
     }
 
     private fun observePartialState(partialStateStream: Observable<PS>) {
-        partialStateDisposable.add(partialStateStream
-            .observeOn(mainThread)
-            .scan(getViewState(), this::reduce)
-            .subscribeBy(
-                onNext = { viewState -> viewStateSubject.onNext(viewState) },
-                onError = { viewState -> viewStateSubject.onError(viewState) },
-                onComplete = { viewStateSubject.onComplete() }
-            ))
-        partialStateDisposable.add(partialStateStream
-            .observeOn(mainThread)
-            .flatMap { partialState ->
-                partialState.mapToViewEffect()
-                    ?.let { viewEffect -> Observable.just(viewEffect) }
-                    ?: Observable.never()
-            }
-            .subscribeBy(
-                onNext = { viewEffect -> viewEffectSubject.onNext(viewEffect) },
-                onError = { viewEffect -> viewEffectSubject.onError(viewEffect) },
-                onComplete = { viewEffectSubject.onComplete() }
-            ))
+        partialStateDisposable.add(
+            partialStateStream
+                .observeOn(mainThread)
+                .scan(getViewState(), this::reduce)
+                .subscribeBy(
+                    onNext = { viewState -> viewStateSubject.onNext(viewState) },
+                    onError = { viewState -> viewStateSubject.onError(viewState) },
+                    onComplete = { viewStateSubject.onComplete() }
+                )
+        )
+        partialStateDisposable.add(
+            partialStateStream
+                .observeOn(mainThread)
+                .flatMap { partialState ->
+                    partialState.mapToViewEffect()
+                        ?.let { viewEffect -> Observable.just(viewEffect) }
+                        ?: Observable.never()
+                }
+                .subscribeBy(
+                    onNext = { viewEffect -> viewEffectSubject.onNext(viewEffect) },
+                    onError = { viewEffect -> viewEffectSubject.onError(viewEffect) },
+                    onComplete = { viewEffectSubject.onComplete() }
+                )
+        )
     }
 
     override fun onCleared() {

@@ -1,8 +1,16 @@
 package com.bonacode.modernmvi.presentation.feature.dogs.list
 
 import com.bonacode.modernmvi.sample.domain.feature.dogs.model.Dog
-import com.bonacode.modernmvi.sample.presentation.feature.dogs.list.*
-import com.nhaarman.mockitokotlin2.*
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.list.DogListInteractor
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.list.DogListPartialState
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.list.DogListPresenter
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.list.DogListViewEffect
+import com.bonacode.modernmvi.sample.presentation.feature.dogs.list.DogListViewState
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.verifyZeroInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.junit.Test
@@ -72,7 +80,7 @@ class DogListPresenterTest {
     }
 
     @Test
-    fun `when refresh dog list then no view effects emitted`(){
+    fun `when refresh dog list then no view effects emitted`() {
         whenever(interactor.refreshDogList()).doReturn(
             Observable.fromIterable(
                 listOf(
@@ -89,7 +97,7 @@ class DogListPresenterTest {
     }
 
     @Test
-    fun `when refresh dog list then proper interactor methods called`(){
+    fun `when refresh dog list then proper interactor methods called`() {
         whenever(interactor.refreshDogList()).doReturn(
             Observable.fromIterable(
                 listOf(
