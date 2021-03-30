@@ -1,4 +1,4 @@
-package com.bonacode.modernmvi.core
+package com.bonacode.modernmvi.sample.presentation.common
 
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity

@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/dog_list_fragment"
         android:name="com.bonacode.modernmvi.sample.presentation.feature.dogs.list.DogListFragment"
-        android:label="FirstFragment" >
+        android:label="Dog list" >
         <action
             android:id="@+id/action_dog_list_fragment_to_dog_details_fragment"
             app:destination="@id/dog_details_fragment" />
@@ -18,10 +18,10 @@
     <fragment
         android:id="@+id/dog_details_fragment"
         android:name="com.bonacode.modernmvi.sample.presentation.feature.dogs.details.DogDetailsFragment"
-        android:label="SecondFragment" >
+        android:label="Details" >
     </fragment>
     <fragment
         android:id="@+id/dog_create_fragment"
         android:name="com.bonacode.modernmvi.sample.presentation.feature.dogs.create.DogCreateFragment"
-        android:label="DogCreateFragment" />
+        android:label="Add new" />
 </navigation>

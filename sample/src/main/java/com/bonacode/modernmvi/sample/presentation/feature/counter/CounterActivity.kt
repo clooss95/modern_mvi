@@ -4,9 +4,9 @@ import android.content.Intent
 import androidx.activity.viewModels
 import com.bonacode.modernmvi.core.MviActivity
 import com.bonacode.modernmvi.core.View
-import com.bonacode.modernmvi.core.viewBinding
 import com.bonacode.modernmvi.databinding.ActivityCounterBinding
 import com.bonacode.modernmvi.sample.presentation.common.clicksTo
+import com.bonacode.modernmvi.sample.presentation.common.viewBinding
 import com.bonacode.modernmvi.sample.presentation.feature.dogs.DogsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable

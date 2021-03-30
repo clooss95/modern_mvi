@@ -6,8 +6,8 @@ import com.bonacode.modernmvi.R
 import com.bonacode.modernmvi.core.MviFragment
 import com.bonacode.modernmvi.core.View
 import com.bonacode.modernmvi.databinding.FragmentDogCreateBinding
-import com.bonacode.modernmvi.presentation.common.hideKeyboard
 import com.bonacode.modernmvi.sample.presentation.common.clicksTo
+import com.bonacode.modernmvi.sample.presentation.common.hideKeyboard
 import com.bonacode.modernmvi.sample.presentation.common.textChangesTo
 import com.bonacode.modernmvi.sample.presentation.common.viewBinding
 import dagger.hilt.android.AndroidEntryPoint

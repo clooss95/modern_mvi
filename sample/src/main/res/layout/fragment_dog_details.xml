@@ -33,51 +33,69 @@
             app:errorText="@{viewState.error}"
             tools:text="Error" />
 
-        <LinearLayout
+
+        <FrameLayout
             android:visibility="@{viewState.dog != null}"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
-            <FrameLayout
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:layout_margin="8dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    app:imageUrlCenterCrop="@{viewState.dog != null ? viewState.dog.imageUrl : null}"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </FrameLayout>
-
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="@{viewState.dog != null ? viewState.dog.name : null}"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textSize="20sp" />
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:text="@{viewState.dog != null ? viewState.dog.breed : null}"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textSize="20sp" />
-            </LinearLayout>
+                    <FrameLayout
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_margin="8dp">
 
-        </LinearLayout>
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:imageUrlCenterCrop="@{viewState.dog != null ? viewState.dog.imageUrl : null}" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="16dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{viewState.dog != null ? viewState.dog.name : null}"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="30sp"
+                            tools:text="Name" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="16dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{viewState.dog != null ? viewState.dog.breed : null}"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="30sp"
+                            tools:text="Breed" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </FrameLayout>
     </LinearLayout>
 </layout>

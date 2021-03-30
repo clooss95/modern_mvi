@@ -30,12 +30,14 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/createButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:layout_marginTop="16dp"
-            android:text="create new" />
+            android:text="create new"
+            android:textSize="16sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"

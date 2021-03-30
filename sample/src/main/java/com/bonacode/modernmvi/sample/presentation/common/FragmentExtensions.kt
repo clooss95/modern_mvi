@@ -1,4 +1,4 @@
-package com.bonacode.modernmvi.presentation.common
+package com.bonacode.modernmvi.sample.presentation.common
 
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
