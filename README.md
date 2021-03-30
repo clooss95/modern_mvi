@@ -30,3 +30,153 @@ The user has the possibility to click the "increase" button, which increases the
 
 ![sample screenshot](https://github.com/clooss95/modern_mvi/blob/master/images/screenshot1.png?raw=true)
 
+##### Let's move on to the code
+
+On this screen the only state that changes is the value of the counter, so the viewstate for this screen will look like this:
+```kotlin
+data class CounterViewState(
+    val counterValue: Int = 0
+) : ViewState {
+    val counterValueText: String = "$counterValue"
+}
+```
+Then, on this screen, the only effect that can occur is navigation to the next screen, so the viewEffect will look like this (let's make it sealed class to make sure that we have handled all cases in the view implementation)
+```kotlin
+sealed class CounterViewEffect : ViewEffect {
+    object NavigateToSecondScreen : CounterViewEffect()
+}
+```
+Now let's take a look at the actions the user can perform. The user can click the "increase" button, click the "decrease" button or navigate to the next screen. Let's create corresponding intents (it also should be a sealed class to cover all the cases in presenter mapping method): 
+```kotlin
+sealed class CounterIntent : Intent {
+    object Increase : CounterIntent()
+    object Decrease : CounterIntent()
+    object NavigateToSecondScreen : CounterIntent()
+}
+```
+Then, we need to implement partial state classes that will know how to modify the viewstate depending on the case: 
+```kotlin
+sealed class CounterPartialState : PartialState<CounterViewState, CounterViewEffect> {
+    object Increase : CounterPartialState() {
+        override fun reduce(previousState: CounterViewState): CounterViewState {
+            return previousState.copy(counterValue = previousState.counterValue + 1)
+        }
+    }
+
+    object Decrease : CounterPartialState() {
+        override fun reduce(previousState: CounterViewState): CounterViewState {
+            return previousState.copy(counterValue = previousState.counterValue - 1)
+        }
+    }
+
+    object NavigateToSecondScreen : CounterPartialState() {
+        override fun mapToViewEffect(): CounterViewEffect {
+            return CounterViewEffect.NavigateToSecondScreen
+        }
+    }
+}
+```
+Now, we create a presenter that maps intents to partial states:
+```kotlin
+class CounterPresenter @Inject constructor(
+    @Named(MAIN_THREAD) mainThread: Scheduler
+) : Presenter<CounterViewState, CounterView, CounterPartialState, CounterIntent, CounterViewEffect>(mainThread) {
+    override val defaultViewState: CounterViewState
+        get() = CounterViewState()
+
+    override fun intentToPartialState(intent: CounterIntent): Observable<CounterPartialState> =
+        when (intent) {
+            is CounterIntent.Increase -> Observable.just(CounterPartialState.Increase)
+            is CounterIntent.Decrease -> Observable.just(CounterPartialState.Decrease)
+            is CounterIntent.NavigateToSecondScreen -> Observable.just(CounterPartialState.NavigateToSecondScreen)
+        }
+}
+```
+Now let's go to the view. We assign the values of the viewstate to the widgets using databinding:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewState"
+            type="com.bonacode.modernmvi.sample.presentation.feature.counter.CounterViewState" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:gravity="center"
+            android:text="@{viewState.counterValueText}"
+            android:textColor="@color/colorBlack"
+            android:textSize="80sp"
+            tools:text="43" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/increaseButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Increase"
+            android:textSize="50sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/decreaseButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Decrease"
+            android:textSize="50sp" />
+    </LinearLayout>
+     
+</layout>
+```
+The last step is to implement the activity/framgent class, which will collect the intents and render the state to the screen:
+```kotlin
+class CounterActivity :
+    MviActivity<CounterViewState, CounterViewEffect, CounterView, CounterPresenter, ActivityCounterBinding>(),
+    CounterView {
+
+    override val binding: ActivityCounterBinding by viewBinding(ActivityCounterBinding::inflate)
+    override val presenter: CounterPresenter by viewModels()
+    override fun getMviView(): CounterView = this
+
+    override fun render(viewState: CounterViewState) {
+        binding.viewState = viewState
+        binding.executePendingBindings()
+    }
+
+    override fun handleViewEffect(event: CounterViewEffect) {
+        when (event) {
+            is CounterViewEffect.NavigateToSecondScreen -> navigateToSecondScreen()
+        }
+    }
+
+    override fun emitIntents(): Observable<CounterIntent> = Observable.merge(
+        listOf(
+            binding.increaseButton clicksTo CounterIntent.Increase,
+            binding.decreaseButton clicksTo CounterIntent.Decrease,
+            binding.navigateForwardButton clicksTo CounterIntent.NavigateToSecondScreen
+        )
+    )
+
+    private fun navigateToSecondScreen() {
+        startActivity(
+            Intent(
+                this,
+                DogsActivity::class.java
+            )
+        )
+    }
+}
+```
