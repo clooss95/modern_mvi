@@ -4,7 +4,7 @@
 ### 1. What is MVI in general?
 
 ![mvi chart](https://github.com/clooss95/modern_mvi/blob/master/images/mvi_chart.png?raw=true)
-##### MVI stands for Model-View-Intent. MVI is one of the newest architecture patterns for Android
+### MVI stands for Model-View-Intent. MVI is one of the newest architecture patterns for Android
 
 MVI works in a very different way compared to its distant relatives, MVC, MVP or MVVM. The role of each MVI components is as follows:
 
@@ -23,14 +23,14 @@ The implementation is based on several basic components:
 - MviActivity - activity class containing boiler plate code required by MVI flow
 - MviFragment - activity class containing boiler plate code required by MVI flow
 
-##### Let's try it on an example
+### Let's try it on an example
 
 Suppose we are to implement a counter screen. This screen displays the current counter status starting from 0.
 The user has the possibility to click the "increase" button, which increases the counter value by 1, or "decrease" button, which decreases the counter value by 1. The user can also press the navigation button which will take him to the next screen. Sounds simple, isn't it?
 
 ![sample screenshot](https://github.com/clooss95/modern_mvi/blob/master/images/screenshot1.png?raw=true)
 
-##### Let's move on to the code
+### Let's move on to the code
 
 On this screen the only state that changes is the value of the counter, so the viewstate for this screen will look like this:
 ```kotlin
@@ -180,3 +180,115 @@ class CounterActivity :
     }
 }
 ```
+
+### Bonus - testing! 
+We create a viewRobot class which will pretend to be a view (fragment/activity). Thanks to this we will be able to effectively test each layer of the application using only unit tests. No espresso needed!
+```kotlin
+class CounterViewRobot(
+    presenter: CounterPresenter
+) : ViewRobot<CounterViewState, CounterViewEffect, CounterView, CounterPresenter>(presenter) {
+
+    private val increaseSubject = PublishSubject.create<CounterIntent.Increase>()
+    private val decreaseSubject = PublishSubject.create<CounterIntent.Decrease>()
+    private val navigateToSecondScreenSubject =
+        PublishSubject.create<CounterIntent.NavigateToSecondScreen>()
+
+    override val view: CounterView = object : CounterView {
+        override fun render(viewState: CounterViewState) {
+            renderedStates.add(viewState)
+        }
+
+        override fun handleViewEffect(event: CounterViewEffect) {
+            emittedViewEffects.add(event)
+        }
+
+        override fun emitIntents(): Observable<CounterIntent> = Observable.merge(
+            increaseSubject,
+            decreaseSubject,
+            navigateToSecondScreenSubject
+        )
+    }
+
+    fun increase() {
+        increaseSubject.onNext(CounterIntent.Increase)
+    }
+
+    fun decrease() {
+        decreaseSubject.onNext(CounterIntent.Decrease)
+    }
+
+    fun navigateToSecondScreen() {
+        navigateToSecondScreenSubject.onNext(CounterIntent.NavigateToSecondScreen)
+    }
+}
+```
+We test the presenter by executing the action that the user would perform and by checking whether the appropriate view state was emitted after the execution of this action:
+```kotlin
+class CounterPresenterTest {
+    private val testScheduler = Schedulers.trampoline()
+    private val presenter = CounterPresenter(testScheduler)
+    private val viewRobot = CounterViewRobot(presenter)
+
+    @Test
+    fun `when increase button clicked then proper view states emitted`() {
+        viewRobot.test {
+            viewRobot.increase()
+        }
+        viewRobot.assertViewStates(
+            CounterViewState(counterValue = 0),
+            CounterViewState(counterValue = 1)
+        )
+    }
+
+    @Test
+    fun `when increase button clicked then no view effects emitted`() {
+        viewRobot.test {
+            viewRobot.increase()
+        }
+        viewRobot.assertViewEffects()
+    }
+
+    @Test
+    fun `when decrease button clicked then proper view states emitted`() {
+        viewRobot.test {
+            viewRobot.decrease()
+        }
+        viewRobot.assertViewStates(
+            CounterViewState(counterValue = 0),
+            CounterViewState(counterValue = -1)
+        )
+    }
+
+    @Test
+    fun `when decrease button clicked then no view effects emitted`() {
+        viewRobot.test {
+            viewRobot.decrease()
+        }
+        viewRobot.assertViewEffects()
+    }
+
+    @Test
+    fun `when navigate to second screen button clicked then proper view effects emitted`() {
+        viewRobot.test {
+            viewRobot.navigateToSecondScreen()
+        }
+        viewRobot.assertViewEffects(
+            CounterViewEffect.NavigateToSecondScreen
+        )
+    }
+
+    @Test
+    fun `when navigate to second screen button clicked then only default view state emitted`() {
+        viewRobot.test {
+            viewRobot.navigateToSecondScreen()
+        }
+        viewRobot.assertViewStates(CounterViewState())
+    }
+}
+```
+
+### More complex examples can be found in the "sample" app.
+
+### License
+Free software, yeah!
+MIT: <https://rem.mit-license.org>
