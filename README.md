@@ -1,3 +1,4 @@
+[![](https://jitpack.io/v/clooss95/modern_mvi.svg)](https://jitpack.io/#clooss95/modern_mvi)
 # Modern MVI
 ##### This project contains a library that helps implement the MVI design pattern in an android application and examples of how to use the library.
 
@@ -12,7 +13,24 @@ MVI works in a very different way compared to its distant relatives, MVC, MVP or
 - Views collect intents emitted by the user and render state on the screen.
 - Intent represents an intention or a desire to perform an action, either by the user or the app itself. For every action, a View receives an Intent.
 
-### 2. How the MVI works with this library?
+### 2. Installation:
+Add it in your root build.gradle at the end of repositories:
+```groovy
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+Add the dependency
+```groovy
+dependencies {
+	        implementation 'com.github.clooss95:modern_mvi:1.0.0'
+	}
+```
+
+### 3. How the MVI works with this library?
 This library contains code that makes it easy for us to implement the MVI pattern and reduce boiler plate.
 The implementation is based on several basic components:
 - ViewState - state of a given screen
