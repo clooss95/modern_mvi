@@ -23,11 +23,17 @@ allprojects {
 		}
 	}
 ```
-Add the dependency
+Add the dependency:
 ```groovy
 dependencies {
 	        implementation 'com.github.clooss95:modern_mvi:1.0.0'
 	}
+```
+Enable viewBinding:
+```groovy
+buildFeatures {
+        viewBinding true
+    }
 ```
 
 ### 3. How the MVI works with this library?
