@@ -21,7 +21,7 @@ The implementation is based on several basic components:
 - Presenter - object that observes the Intents and maps thems into PartialStates
 - PartialState - object that updates the ViewState using "reduce" method
 - MviActivity - activity class containing boiler plate code required by MVI flow
-- MviFragment - activity class containing boiler plate code required by MVI flow
+- MviFragment - fragment class containing boiler plate code required by MVI flow
 
 ### Let's try it on an example
 
