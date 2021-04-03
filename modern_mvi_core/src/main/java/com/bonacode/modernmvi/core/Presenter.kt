@@ -78,7 +78,7 @@ abstract class Presenter<VS : ViewState, V : View<VS, VE, IN>, PS : PartialState
     @MainThread
     private fun observeViewEffects() {
         viewStateDisposable.add(
-            viewEffectSubject.distinctUntilChanged()
+            viewEffectSubject
                 .observeOn(mainThread)
                 .subscribe(
                     { viewEffect ->

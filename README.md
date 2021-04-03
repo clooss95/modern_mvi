@@ -1,11 +1,11 @@
 [![](https://jitpack.io/v/clooss95/modern_mvi.svg)](https://jitpack.io/#clooss95/modern_mvi)
 # Modern MVI
-##### This project contains a library that helps implement the MVI design pattern in an android application and examples of how to use the library.
+##### The puropse of this project is to create a library, that helps implementing MVI design pattern in an Android application. Also, it presents some examples of the library usage possibilities.
 
 ### 1. What is MVI in general?
 
 ![mvi chart](https://github.com/clooss95/modern_mvi/blob/master/images/mvi_chart.png?raw=true)
-### MVI stands for Model-View-Intent. MVI is one of the newest architecture patterns for Android
+### MVI stands for Model-View-Intent, being one of the newest architecture patterns for Android system
 
 MVI works in a very different way compared to its distant relatives, MVC, MVP or MVVM. The role of each MVI components is as follows:
 
