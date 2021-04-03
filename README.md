@@ -1,6 +1,6 @@
 [![](https://jitpack.io/v/clooss95/modern_mvi.svg)](https://jitpack.io/#clooss95/modern_mvi)
 # Modern MVI
-##### The puropse of this project is to create a library, that helps implementing MVI design pattern in an Android application. Also, it presents some examples of the library usage possibilities.
+### The puropse of this project is to create a library, that helps implementing MVI design pattern in an Android application. Also, it presents some examples of the library usage possibilities.
 
 ### 1. What is MVI in general?
 
@@ -26,7 +26,7 @@ allprojects {
 Add the dependency:
 ```groovy
 dependencies {
-	        implementation 'com.github.clooss95:modern_mvi:1.0.0'
+	        implementation 'com.github.clooss95:modern_mvi:1.0.1'
 	}
 ```
 Enable viewBinding:
